@@ -7,7 +7,7 @@ const sessionDuration = randomIntBetween(4200, 60000);
 
 /** @type {import("k6/options").Options} */
 export const options = {
-  vus: 1000,
+  vus: 30,
   duration: "30s",
   discardResponseBodies: true,
 };

@@ -8,6 +8,7 @@
     "helmet": "^6.0.0",
     "nanoid": "^4.0.0",
     "tsx": "^3.9.0",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.10.0",
     "ws": "^8.8.1",
     "zod": "^3.19.1"
   },
@@ -30,7 +31,7 @@
   "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "build": "NODE_ENV=production tsup-node --target=node16 --minify src/index.ts",
+    "build": "NODE_ENV=production tsup-node --target=node16 --minify src/ws.ts src/uws.ts",
     "dev": "tsx watch src/index.ts",
     "start": "tsx src/index.ts"
   }

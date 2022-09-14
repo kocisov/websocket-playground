@@ -1,21 +1,53 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: websocket-playground
+  name: websocket-playground-ws
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: websocket-playground
+      app: websocket-playground-ws
   template:
     metadata:
       labels:
-        app: websocket-playground
+        app: websocket-playground-ws
     spec:
       containers:
-        - name: websocket-playground
-          image: ...
+        - name: websocket-playground-ws
+          image: ...:latest
           imagePullPolicy: Always
+          env:
+            - name: TYPE
+              value: "WS"
+          resources:
+            requests:
+              memory: "1000Mi"
+              cpu: "1000m"
+            limits:
+              memory: "1000Mi"
+              cpu: "1000m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: websocket-playground-uws
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: websocket-playground-uws
+  template:
+    metadata:
+      labels:
+        app: websocket-playground-uws
+    spec:
+      containers:
+        - name: websocket-playground-uws
+          image: ...:latest
+          imagePullPolicy: Always
+          env:
+            - name: TYPE
+              value: "uWS"
           resources:
             requests:
               memory: "1000Mi"

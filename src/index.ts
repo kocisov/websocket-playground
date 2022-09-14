@@ -123,6 +123,8 @@ const server = new WebSocketServer({
 });
 
 server.on("connection", (ws: ExtendedWebSocket) => {
+  ws.join("general");
+
   ws.on("message", (message, isBinary) => {
     if (isBinary) {
       // Use MessagePack/avsc/etc... if Binary Data is desired
@@ -169,6 +171,10 @@ server.on("connection", (ws: ExtendedWebSocket) => {
     ws.leaveAll();
   });
 });
+
+setInterval(() => {
+  console.log("[USERS]", rooms.get("general")?.size ?? 0);
+}, 5_000);
 
 // setInterval(() => {
 //   broadcast("mem", {

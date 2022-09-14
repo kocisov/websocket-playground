@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+dist
+.env
+.prettierrc
+logs
+*.log
+Dockerfile
+.gitignore
+**/.git
+k6
+setup-vm.sh
+README.md
+LICENSE

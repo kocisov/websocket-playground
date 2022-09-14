@@ -1,8 +1,9 @@
+import { randomIntBetween } from "https://jslib.k6.io/k6-utils/1.1.0/index.js";
 import { check } from "k6";
 import ws from "k6/ws";
 
 const url = "wss://...";
-const sessionDuration = 16000;
+const sessionDuration = randomIntBetween(4200, 60000);
 
 /** @type {import("k6/options").Options} */
 export const options = {

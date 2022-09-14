@@ -3,7 +3,7 @@ import { setTimeout } from "k6/experimental/timers";
 import { WebSocket } from "k6/experimental/websockets";
 
 const url = "wss://...";
-const sessionDuration = randomIntBetween(4200, 24000);
+const sessionDuration = randomIntBetween(4200, 60000);
 
 /** @type {import("k6/options").Options} */
 export const options = {

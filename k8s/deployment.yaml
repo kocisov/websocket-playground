@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: websocket-playground
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: websocket-playground
+  template:
+    metadata:
+      labels:
+        app: websocket-playground
+    spec:
+      containers:
+        - name: websocket-playground
+          image: ...
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "1000Mi"
+              cpu: "1000m"
+            limits:
+              memory: "1000Mi"
+              cpu: "1000m"

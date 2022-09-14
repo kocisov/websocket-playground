@@ -1,3 +1,5 @@
+import express from "express";
+import helmet from "helmet";
 import { nanoid } from "nanoid";
 import { TextDecoder } from "node:util";
 import { WebSocket, WebSocketServer } from "ws";
@@ -112,17 +114,45 @@ class ExtendedWebSocket extends WebSocket {
   }
 }
 
+let interval: ReturnType<typeof setInterval>;
+
 const port = Number(process.env["PORT"] ?? 3001);
 
-const server = new WebSocketServer({
+const app = express();
+
+app.use(helmet());
+
+app.post("/spam", (req, res) => {
+  if (!interval) {
+    interval = setInterval(() => {
+      broadcast("mem", {
+        t: "usage:mem",
+        p: process.memoryUsage().heapUsed / 1024 / 1024,
+      });
+    }, 250);
+  } else {
+    clearInterval(interval);
+  }
+  res.status(200).type("html").send("Ok.");
+});
+
+app.all("*", (req, res) => {
+  res.status(200).type("html").send("Hello from the Playground Service.");
+});
+
+const server = app.listen(port, () => {
+  console.log(`[SERVER Listening on http://localhost:${port}`);
+});
+
+const ws = new WebSocketServer({
   // host: "0.0.0.0",
-  port,
+  server,
   maxPayload: 16 * 1024 * 1024,
   clientTracking: false,
   WebSocket: ExtendedWebSocket,
 });
 
-server.on("connection", (ws: ExtendedWebSocket) => {
+ws.on("connection", (ws: ExtendedWebSocket) => {
   ws.join("general");
 
   ws.on("message", (message, isBinary) => {
@@ -175,10 +205,3 @@ server.on("connection", (ws: ExtendedWebSocket) => {
 setInterval(() => {
   console.log("[USERS]", rooms.get("general")?.size ?? 0);
 }, 5_000);
-
-// setInterval(() => {
-//   broadcast("mem", {
-//     t: "usage:mem",
-//     p: process.memoryUsage().heapUsed / 1024 / 1024,
-//   });
-// }, 16);

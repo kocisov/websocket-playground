@@ -30,7 +30,8 @@
   "main": "src/index.ts",
   "private": true,
   "scripts": {
-    "start": "tsx src/index.ts",
-    "build": "NODE_ENV=production tsup-node --target=node16 --minify src/index.ts"
+    "build": "NODE_ENV=production tsup-node --target=node16 --minify src/index.ts",
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts"
   }
 }
